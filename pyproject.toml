@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "metaflow-backend-kit"
+version = "0.1.0"
+description = "Development kit for building Metaflow compute backend extensions"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "Apache-2.0" }
+dependencies = ["metaflow", "pytest"]
+
+[project.optional-dependencies]
+dev = ["pytest-xdist", "pytest-timeout", "pytest-cov"]
+
+[project.scripts]
+metaflow-backend-scaffold = "metaflow_backend_kit.scaffold.__main__:main"
+metaflow-backend-validate = "metaflow_backend_kit.validate.__main__:main"
+metaflow-backend-test = "metaflow_backend_kit.test.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["metaflow_backend_kit*"]
+
+[tool.pytest.ini_options]
+markers = [
+    "compliance: backend compliance tests",
+    "env: environment variable propagation tests",
+    "retry: retry count and exit code tests",
+    "conda: conda/pypi environment tests",
+    "resources: CPU/memory/GPU resource tests",
+    "metadata: metadata sync tests",
+    "logging: log streaming and mflog tests",
+]
