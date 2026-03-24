@@ -32,4 +32,6 @@ jobs:
           rm -rf _citest/
 
       - name: Run tests
-        run: pytest -v --ignore=metaflow_backend_kit/compliance
+        # Exit code 5 = no tests collected (compliance tests require a live backend).
+        # Treat that as a pass; any other non-zero exit is a real failure.
+        run: pytest -v --ignore=metaflow_backend_kit/compliance || { ec=$?; [ $ec -eq 5 ] && exit 0 || exit $ec; }
